@@ -88,13 +88,11 @@
             <div class="bg-white rounded-lg shadow-lg p-5 mb-6" id="kotakInput">
                 <h3 class="font-semibold text-gray-700 mb-3">INPUT DATA</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                    
+                    <!-- ✅ BAGIAN INI SUDAH DIUBAH: DARI PILIHAN JADI KETIK MANUAL -->
                     <div>
-                        <label class="block text-xs text-gray-600 mb-1">Pilih Bibit</label>
-                        <select id="pilihBibit" class="w-full border border-gray-300 rounded px-3 py-2">
-                            <option value="Pala">Pala</option>
-                            <option value="Cengkeh">Cengkeh</option>
-                            <option value="Kopi">Kopi</option>
-                        </select>
+                        <label class="block text-xs text-gray-600 mb-1">Nama Bibit</label>
+                        <input type="text" id="namaBibit" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Contoh: Pala, Cengkeh, dll">
                     </div>
                     
                     <div id="kolomProduksi">
@@ -268,6 +266,12 @@
         }
 
         function simpanProduksi() {
+            // Cek apakah nama bibit sudah diisi
+            const namaBibit = document.getElementById('namaBibit').value;
+            if(!namaBibit) {
+                alert("⚠️ Mohon tulis Nama Bibit dulu!");
+                return;
+            }
             if(peranPengguna !== "admin") {
                 alert("❌ Hanya Admin yang boleh mengisi Produksi!");
                 return;
@@ -276,6 +280,12 @@
         }
 
         function simpanDistribusi() {
+            // Cek apakah nama bibit sudah diisi
+            const namaBibit = document.getElementById('namaBibit').value;
+            if(!namaBibit) {
+                alert("⚠️ Mohon tulis Nama Bibit dulu!");
+                return;
+            }
             alert("✅ Data Distribusi disimpan! Terima kasih!");
         }
     </script>
