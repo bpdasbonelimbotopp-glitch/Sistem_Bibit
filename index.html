@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pencatatan Produksi & Distribusi Bibit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hijau: {
+                            utama: '#249458',
+                            muda: '#86d086',
+                            terang: '#e6f9e6',
+                            gelap: '#1a6b40'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-pola {
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23249458' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-hijau-muda to-hijau-utama min-h-screen font-sans">
+
+    <!-- HALAMAN LOGIN -->
+    <div id="halamanLogin" class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md">
+            <div class="text-center mb-6">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png" alt="Logo Kehutanan" class="h-16 mx-auto mb-2">
+                <h2 class="text-hijau-gelap font-bold text-xl">BPDAS BONE LIMBOTO</h2>
+                <p class="text-gray-600 text-sm">Sistem Pencatatan Produksi & Distribusi Bibit</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-1">Username</label>
+                    <input type="text" id="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-utama focus:border-transparent" placeholder="Masukkan username">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-utama focus:border-transparent" placeholder="Masukkan password">
+                </div>
+
+                <button onclick="login()" class="w-full bg-hijau-utama hover:bg-hijau-gelap text-white font-medium py-2.5 rounded-lg transition">
+                    Masuk ke Sistem
+                </button>
+            </div>
+
+            <div class="mt-4 text-center text-xs text-gray-500">
+                <p><strong>Akun:</strong><br>
+                🔹 Admin: <b>admin</b> / <b>admin123</b><br>
+                🔹 Masyarakat: <b>warga</b> / <b>warga123</b></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- HALAMAN DASHBOARD -->
+    <div id="halamanDashboard" class="hidden bg-pola min-h-screen">
+        <div class="container mx-auto px-4 py-6 max-w-5xl">
+            
+            <div class="text-center mb-8">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png" alt="Logo Kehutanan" class="h-16 mx-auto mb-2">
+                <h1 class="text-hijau-gelap font-bold text-2xl">BPDAS BONE LIMBOTO</h1>
+                <h2 class="text-hijau-gelap font-semibold text-lg">SISTEM PENCATATAN PRODUKSI & DISTRIBUSI BIBIT</h2>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-3 mb-4 flex justify-between items-center">
+                <span id="namaPengguna" class="font-medium text-hijau-gelap"></span>
+                <button onclick="logout()" class="text-red-600 hover:text-red-800 text-sm"><i class="fa fa-sign-out mr-1"></i> Keluar</button>
+            </div>
+
+
+            <!-- INPUT DATA -->
+            <div class="bg-white rounded-lg shadow-lg p-5 mb-6" id="kotakInput">
+                <h3 class="font-semibold text-gray-700 mb-3">INPUT DATA</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                    <div>
+                        <label class="block text-xs text-gray-600 mb-1">Pilih Bibit</label>
+                        <select id="pilihBibit" class="w-full border border-gray-300 rounded px-3 py-2">
+                            <option value="Pala">Pala</option>
+                            <option value="Cengkeh">Cengkeh</option>
+                            <option value="Kopi">Kopi</option>
+                        </select>
+                    </div>
+                    
+                    <div id="kolomProduksi">
+                        <label class="block text-xs text-gray-600 mb-1">Jumlah Produksi</label>
+                        <input type="number" id="jmlProduksi" value="10000" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs text-gray-600 mb-1">Jumlah Distribusi</label>
+                        <input type="number" id="jmlDistribusi" value="0" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button onclick="simpanProduksi()" id="tombolProduksi" class="bg-hijau-utama text-white px-4 py-2 rounded hover:bg-hijau-gelap transition">Produksi</button>
+                        <button onclick="simpanDistribusi()" class="bg-amber-700 text-white px-4 py-2 rounded hover:bg-amber-800 transition">Distribusi</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- RINGKASAN -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <p class="text-gray-600 text-sm">Total Produksi</p>
+                    <p class="text-hijau-utama font-bold text-2xl" id="totalProduksi">5.000</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <p class="text-gray-600 text-sm">Total Distribusi</p>
+                    <p class="text-amber-700 font-bold text-2xl" id="totalDistribusi">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <p class="text-gray-600 text-sm">Sisa Stok</p>
+                    <p class="text-blue-700 font-bold text-2xl" id="sisaStok">5.000</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <p class="text-gray-600 text-sm">Capaian</p>
+                    <p class="text-purple-700 font-bold text-2xl" id="capaian">50.0%</p>
+                </div>
+            </div>
+
+
+            <!-- TABEL -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h3 class="font-semibold text-gray-700 mb-3">DATA PRODUKSI</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border p-2 text-left">Nama</th>
+                                    <th class="border p-2">Target</th>
+                                    <th class="border p-2">%</th>
+                                    <th class="border p-2">Jan</th>
+                                    <th class="border p-2">Feb</th>
+                                    <th class="border p-2">Mar</th>
+                                    <th class="border p-2">Apr</th>
+                                    <th class="border p-2">Mei</th>
+                                    <th class="border p-2">Jun</th>
+                                    <th class="border p-2">Jul</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelProduksi">
+                                <tr>
+                                    <td class="border p-2">Pala</td>
+                                    <td class="border p-2 text-center">10.000</td>
+                                    <td class="border p-2 text-center">50.0%</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">5.000</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h3 class="font-semibold text-gray-700 mb-3">DATA DISTRIBUSI</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border p-2 text-left">Nama</th>
+                                    <th class="border p-2">Jan</th>
+                                    <th class="border p-2">Feb</th>
+                                    <th class="border p-2">Mar</th>
+                                    <th class="border p-2">Apr</th>
+                                    <th class="border p-2">Mei</th>
+                                    <th class="border p-2">Jun</th>
+                                    <th class="border p-2">Jul</th>
+                                    <th class="border p-2">Agu</th>
+                                    <th class="border p-2">Sep</th>
+                                    <th class="border p-2">Okt</th>
+                                    <th class="border p-2">Nov</th>
+                                    <th class="border p-2">Des</th>
+                                    <th class="border p-2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelDistribusi">
+                                <tr>
+                                    <td class="border p-2">Pala</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">0</td>
+                                    <td class="border p-2 text-center">5.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-10">
+                <button class="bg-hijau-gelap text-white px-6 py-2.5 rounded-lg hover:bg-hijau-utama transition shadow-md">
+                    <i class="fa fa-download mr-2"></i> DOWNLOAD EXCEL
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ATURAN SISTEM -->
+    <script>
+        let peranPengguna = ""; 
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === "admin" && pass === "admin123") {
+                peranPengguna = "admin";
+                bukaDashboard("Admin BPDAS");
+                document.getElementById('kolomProduksi').style.display = "block";
+                document.getElementById('tombolProduksi').style.display = "block";
+            } 
+            else if(user === "warga" && pass === "warga123") {
+                peranPengguna = "masyarakat";
+                bukaDashboard("Pengambil Bibit");
+                document.getElementById('kolomProduksi').style.display = "none";
+                document.getElementById('tombolProduksi').style.display = "none";
+            } 
+            else {
+                alert("❌ Username atau Password salah!");
+            }
+        }
+
+        function bukaDashboard(nama) {
+            document.getElementById('halamanLogin').classList.add('hidden');
+            document.getElementById('halamanDashboard').classList.remove('hidden');
+            document.getElementById('namaPengguna').innerText = `Halo, ${nama}`;
+        }
+
+        function logout() {
+            document.getElementById('halamanDashboard').classList.add('hidden');
+            document.getElementById('halamanLogin').classList.remove('hidden');
+            document.getElementById('username').value = "";
+            document.getElementById('password').value = "";
+        }
+
+        function simpanProduksi() {
+            if(peranPengguna !== "admin") {
+                alert("❌ Hanya Admin yang boleh mengisi Produksi!");
+                return;
+            }
+            alert("✅ Data Produksi disimpan!");
+        }
+
+        function simpanDistribusi() {
+            alert("✅ Data Distribusi disimpan! Terima kasih!");
+        }
+    </script>
+
+</body>
+</html>
