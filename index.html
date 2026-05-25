@@ -89,20 +89,22 @@
                 <h3 class="font-semibold text-gray-700 mb-3">INPUT DATA</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
                     
-                    <!-- ✅ BAGIAN INI SUDAH DIUBAH: DARI PILIHAN JADI KETIK MANUAL -->
+                    <!-- KOLOM NAMA BIBIT (MANUAL KETIK) -->
                     <div>
                         <label class="block text-xs text-gray-600 mb-1">Nama Bibit</label>
                         <input type="text" id="namaBibit" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Contoh: Pala, Cengkeh, dll">
                     </div>
                     
+                    <!-- KOLOM PRODUKSI (HANYA ADMIN) -->
                     <div id="kolomProduksi">
                         <label class="block text-xs text-gray-600 mb-1">Jumlah Produksi</label>
-                        <input type="number" id="jmlProduksi" value="10000" class="w-full border border-gray-300 rounded px-3 py-2">
+                        <input type="number" id="jmlProduksi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
                     </div>
                     
+                    <!-- KOLOM DISTRIBUSI (ADMIN & MASYARAKAT) -->
                     <div>
                         <label class="block text-xs text-gray-600 mb-1">Jumlah Distribusi</label>
-                        <input type="number" id="jmlDistribusi" value="0" class="w-full border border-gray-300 rounded px-3 py-2">
+                        <input type="number" id="jmlDistribusi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
                     </div>
                     
                     <div class="flex gap-2">
@@ -113,11 +115,11 @@
             </div>
 
 
-            <!-- RINGKASAN -->
+            <!-- RINGKASAN ANGKA OTOMATIS -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
                 <div class="bg-white rounded-lg shadow p-4">
                     <p class="text-gray-600 text-sm">Total Produksi</p>
-                    <p class="text-hijau-utama font-bold text-2xl" id="totalProduksi">5.000</p>
+                    <p class="text-hijau-utama font-bold text-2xl" id="totalProduksi">0</p>
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
                     <p class="text-gray-600 text-sm">Total Distribusi</p>
@@ -125,92 +127,50 @@
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
                     <p class="text-gray-600 text-sm">Sisa Stok</p>
-                    <p class="text-blue-700 font-bold text-2xl" id="sisaStok">5.000</p>
+                    <p class="text-blue-700 font-bold text-2xl" id="sisaStok">0</p>
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
-                    <p class="text-gray-600 text-sm">Capaian</p>
-                    <p class="text-purple-700 font-bold text-2xl" id="capaian">50.0%</p>
+                    <p class="text-gray-600 text-sm">Capaian (%)</p>
+                    <p class="text-purple-700 font-bold text-2xl" id="capaian">0%</p>
                 </div>
             </div>
 
 
-            <!-- TABEL -->
+            <!-- TABEL DATA -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- TABEL PRODUKSI -->
                 <div class="bg-white rounded-lg shadow-lg p-4">
                     <h3 class="font-semibold text-gray-700 mb-3">DATA PRODUKSI</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="bg-gray-100">
-                                    <th class="border p-2 text-left">Nama</th>
-                                    <th class="border p-2">Target</th>
-                                    <th class="border p-2">%</th>
-                                    <th class="border p-2">Jan</th>
-                                    <th class="border p-2">Feb</th>
-                                    <th class="border p-2">Mar</th>
-                                    <th class="border p-2">Apr</th>
-                                    <th class="border p-2">Mei</th>
-                                    <th class="border p-2">Jun</th>
-                                    <th class="border p-2">Jul</th>
+                                    <th class="border p-2 text-left">Nama Bibit</th>
+                                    <th class="border p-2 text-center">Jumlah</th>
+                                    <th class="border p-2 text-center">Bulan Ini</th>
                                 </tr>
                             </thead>
                             <tbody id="tabelProduksi">
-                                <tr>
-                                    <td class="border p-2">Pala</td>
-                                    <td class="border p-2 text-center">10.000</td>
-                                    <td class="border p-2 text-center">50.0%</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">5.000</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                </tr>
+                                <!-- Data yang disimpan akan muncul di sini -->
                             </tbody>
                         </table>
                     </div>
                 </div>
 
+                <!-- TABEL DISTRIBUSI -->
                 <div class="bg-white rounded-lg shadow-lg p-4">
                     <h3 class="font-semibold text-gray-700 mb-3">DATA DISTRIBUSI</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="bg-gray-100">
-                                    <th class="border p-2 text-left">Nama</th>
-                                    <th class="border p-2">Jan</th>
-                                    <th class="border p-2">Feb</th>
-                                    <th class="border p-2">Mar</th>
-                                    <th class="border p-2">Apr</th>
-                                    <th class="border p-2">Mei</th>
-                                    <th class="border p-2">Jun</th>
-                                    <th class="border p-2">Jul</th>
-                                    <th class="border p-2">Agu</th>
-                                    <th class="border p-2">Sep</th>
-                                    <th class="border p-2">Okt</th>
-                                    <th class="border p-2">Nov</th>
-                                    <th class="border p-2">Des</th>
-                                    <th class="border p-2">Total</th>
+                                    <th class="border p-2 text-left">Nama Bibit</th>
+                                    <th class="border p-2 text-center">Jumlah</th>
+                                    <th class="border p-2 text-center">Diambil Oleh</th>
                                 </tr>
                             </thead>
                             <tbody id="tabelDistribusi">
-                                <tr>
-                                    <td class="border p-2">Pala</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">0</td>
-                                    <td class="border p-2 text-center">5.000</td>
-                                </tr>
+                                <!-- Data yang disimpan akan muncul di sini -->
                             </tbody>
                         </table>
                     </div>
@@ -227,10 +187,13 @@
     </div>
 
 
-    <!-- ATURAN SISTEM -->
+    <!-- LOGIKA SISTEM (SUDAH DIPERBAIKI AGAR DATA MASUK) -->
     <script>
         let peranPengguna = ""; 
+        let totalP = 0; // Simpan angka total produksi
+        let totalD = 0; // Simpan angka total distribusi
 
+        // Fungsi Login
         function login() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
@@ -244,6 +207,7 @@
             else if(user === "warga" && pass === "warga123") {
                 peranPengguna = "masyarakat";
                 bukaDashboard("Pengambil Bibit");
+                // Sembunyikan kolom produksi untuk masyarakat
                 document.getElementById('kolomProduksi').style.display = "none";
                 document.getElementById('tombolProduksi').style.display = "none";
             } 
@@ -265,28 +229,88 @@
             document.getElementById('password').value = "";
         }
 
+
+        // ✅ FUNGSI SIMPAN PRODUKSI (SUDAH BISA MASUK KE TABEL)
         function simpanProduksi() {
-            // Cek apakah nama bibit sudah diisi
-            const namaBibit = document.getElementById('namaBibit').value;
-            if(!namaBibit) {
-                alert("⚠️ Mohon tulis Nama Bibit dulu!");
+            const nama = document.getElementById('namaBibit').value;
+            const jumlah = parseInt(document.getElementById('jmlProduksi').value);
+            const bulan = new Date().toLocaleString('id-ID', { month: 'long' });
+
+            // Cek Validasi
+            if(!nama || !jumlah || jumlah <= 0) {
+                alert("⚠️ Mohon isi Nama Bibit dan Jumlah dengan benar!");
                 return;
             }
             if(peranPengguna !== "admin") {
                 alert("❌ Hanya Admin yang boleh mengisi Produksi!");
                 return;
             }
-            alert("✅ Data Produksi disimpan!");
+
+            // 1. Masukkan data ke Tabel Produksi
+            const barisBaru = `<tr>
+                                <td class="border p-2">${nama}</td>
+                                <td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td>
+                                <td class="border p-2 text-center">${bulan}</td>
+                               </tr>`;
+            document.getElementById('tabelProduksi').innerHTML += barisBaru;
+
+            // 2. Hitung Ulang Angka Total
+            totalP += jumlah;
+            document.getElementById('totalProduksi').innerText = totalP.toLocaleString('id-ID');
+            hitungOtomatis();
+
+            // 3. Bersihkan kolom input
+            document.getElementById('namaBibit').value = "";
+            document.getElementById('jmlProduksi').value = "";
+            
+            alert("✅ Data Produksi BERHASIL disimpan & masuk ke tabel!");
         }
 
+
+        // ✅ FUNGSI SIMPAN DISTRIBUSI (SUDAH BISA MASUK KE TABEL)
         function simpanDistribusi() {
-            // Cek apakah nama bibit sudah diisi
-            const namaBibit = document.getElementById('namaBibit').value;
-            if(!namaBibit) {
-                alert("⚠️ Mohon tulis Nama Bibit dulu!");
+            const nama = document.getElementById('namaBibit').value;
+            const jumlah = parseInt(document.getElementById('jmlDistribusi').value);
+            const pengambil = (peranPengguna === "admin") ? "Admin" : "Masyarakat";
+
+            // Cek Validasi
+            if(!nama || !jumlah || jumlah <= 0) {
+                alert("⚠️ Mohon isi Nama Bibit dan Jumlah dengan benar!");
                 return;
             }
-            alert("✅ Data Distribusi disimpan! Terima kasih!");
+            if(jumlah > (totalP - totalD)) {
+                alert("❌ Stok tidak cukup! Sisa stok: " + (totalP - totalD));
+                return;
+            }
+
+            // 1. Masukkan data ke Tabel Distribusi
+            const barisBaru = `<tr>
+                                <td class="border p-2">${nama}</td>
+                                <td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td>
+                                <td class="border p-2 text-center">${pengambil}</td>
+                               </tr>`;
+            document.getElementById('tabelDistribusi').innerHTML += barisBaru;
+
+            // 2. Hitung Ulang Angka Total
+            totalD += jumlah;
+            document.getElementById('totalDistribusi').innerText = totalD.toLocaleString('id-ID');
+            hitungOtomatis();
+
+            // 3. Bersihkan kolom input
+            document.getElementById('namaBibit').value = "";
+            document.getElementById('jmlDistribusi').value = "";
+            
+            alert("✅ Data Distribusi BERHASIL disimpan & masuk ke tabel!");
+        }
+
+
+        // ✅ FUNGSI HITUNG SISA STOK & CAPAIAN OTOMATIS
+        function hitungOtomatis() {
+            const sisa = totalP - totalD;
+            const capaian = (totalP > 0) ? Math.round((totalD / totalP) * 100) : 0;
+            
+            document.getElementById('sisaStok').innerText = sisa.toLocaleString('id-ID');
+            document.getElementById('capaian').innerText = capaian + "%";
         }
     </script>
 
