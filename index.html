@@ -89,19 +89,16 @@
                 <h3 class="font-semibold text-gray-700 mb-3">INPUT DATA</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
                     
-                    <!-- KOLOM NAMA BIBIT (MANUAL KETIK) -->
                     <div>
                         <label class="block text-xs text-gray-600 mb-1">Nama Bibit</label>
-                        <input type="text" id="namaBibit" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Contoh: Pala, Cengkeh, dll">
+                        <input type="text" id="namaBibit" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Contoh: Pala, Cengkeh, Durian">
                     </div>
                     
-                    <!-- KOLOM PRODUKSI (HANYA ADMIN) -->
                     <div id="kolomProduksi">
                         <label class="block text-xs text-gray-600 mb-1">Jumlah Produksi</label>
                         <input type="number" id="jmlProduksi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
                     </div>
                     
-                    <!-- KOLOM DISTRIBUSI (ADMIN & MASYARAKAT) -->
                     <div>
                         <label class="block text-xs text-gray-600 mb-1">Jumlah Distribusi</label>
                         <input type="number" id="jmlDistribusi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
@@ -115,7 +112,7 @@
             </div>
 
 
-            <!-- RINGKASAN ANGKA OTOMATIS -->
+            <!-- RINGKASAN ANGKA -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
                 <div class="bg-white rounded-lg shadow p-4">
                     <p class="text-gray-600 text-sm">Total Produksi</p>
@@ -131,7 +128,7 @@
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
                     <p class="text-gray-600 text-sm">Capaian (%)</p>
-                    <p class="text-purple-700 font-bold text-2xl" id="capaian">0%</p>
+                    <p class="text-purple-700 font-bold text-2xl" id="capaian">0.0%</p>
                 </div>
             </div>
 
@@ -139,7 +136,7 @@
             <!-- TABEL DATA -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <!-- TABEL PRODUKSI -->
-                <div class="bg-white rounded-lg shadow-lg p-4">
+                <div class="bg-white rounded-lg shadow-lg p-4" id="bagianProduksi">
                     <h3 class="font-semibold text-gray-700 mb-3">DATA PRODUKSI</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
@@ -150,9 +147,7 @@
                                     <th class="border p-2 text-center">Bulan Ini</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabelProduksi">
-                                <!-- Data yang disimpan akan muncul di sini -->
-                            </tbody>
+                            <tbody id="tabelProduksi"></tbody>
                         </table>
                     </div>
                 </div>
@@ -162,16 +157,14 @@
                     <h3 class="font-semibold text-gray-700 mb-3">DATA DISTRIBUSI</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
-                            <thead>
+                            <thead id="headerDistribusi">
                                 <tr class="bg-gray-100">
                                     <th class="border p-2 text-left">Nama Bibit</th>
                                     <th class="border p-2 text-center">Jumlah</th>
-                                    <th class="border p-2 text-center">Diambil Oleh</th>
+                                    <th class="border p-2 text-center" id="kolomPengambil">Diambil Oleh</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabelDistribusi">
-                                <!-- Data yang disimpan akan muncul di sini -->
-                            </tbody>
+                            <tbody id="tabelDistribusi"></tbody>
                         </table>
                     </div>
                 </div>
@@ -187,13 +180,14 @@
     </div>
 
 
-    <!-- LOGIKA SISTEM (SUDAH DIPERBAIKI AGAR DATA MASUK) -->
+    <!-- LOGIKA DIPERBAIKI SESUAI TAMPILAN KAMU -->
     <script>
         let peranPengguna = ""; 
-        let totalP = 0; // Simpan angka total produksi
-        let totalD = 0; // Simpan angka total distribusi
+        let totalP = 0;
+        let totalD = 0;
+        const bulanSekarang = new Date().getMonth();
 
-        // Fungsi Login
+        // Login
         function login() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
@@ -201,15 +195,20 @@
             if(user === "admin" && pass === "admin123") {
                 peranPengguna = "admin";
                 bukaDashboard("Admin BPDAS");
+                // Tampilkan semua untuk ADMIN
                 document.getElementById('kolomProduksi').style.display = "block";
                 document.getElementById('tombolProduksi').style.display = "block";
+                document.getElementById('bagianProduksi').style.display = "block";
+                document.getElementById('kolomPengambil').style.display = "table-cell";
             } 
             else if(user === "warga" && pass === "warga123") {
                 peranPengguna = "masyarakat";
                 bukaDashboard("Pengambil Bibit");
-                // Sembunyikan kolom produksi untuk masyarakat
+                // SEMBUNYIKAN BAGIAN PRODUKSI TOTAL untuk MASYARAKAT
                 document.getElementById('kolomProduksi').style.display = "none";
                 document.getElementById('tombolProduksi').style.display = "none";
+                document.getElementById('bagianProduksi').style.display = "none";
+                document.getElementById('kolomPengambil').style.display = "none";
             } 
             else {
                 alert("❌ Username atau Password salah!");
@@ -230,84 +229,59 @@
         }
 
 
-        // ✅ FUNGSI SIMPAN PRODUKSI (SUDAH BISA MASUK KE TABEL)
+        // SIMPAN PRODUKSI
         function simpanProduksi() {
-            const nama = document.getElementById('namaBibit').value;
+            const nama = document.getElementById('namaBibit').value.trim();
             const jumlah = parseInt(document.getElementById('jmlProduksi').value);
-            const bulan = new Date().toLocaleString('id-ID', { month: 'long' });
 
-            // Cek Validasi
-            if(!nama || !jumlah || jumlah <= 0) {
-                alert("⚠️ Mohon isi Nama Bibit dan Jumlah dengan benar!");
-                return;
-            }
-            if(peranPengguna !== "admin") {
-                alert("❌ Hanya Admin yang boleh mengisi Produksi!");
-                return;
-            }
+            if(!nama || isNaN(jumlah) || jumlah <= 0) { alert("⚠️ Isi nama & jumlah!"); return; }
+            if(peranPengguna !== "admin") { alert("❌ Hanya Admin!"); return; }
 
-            // 1. Masukkan data ke Tabel Produksi
-            const barisBaru = `<tr>
-                                <td class="border p-2">${nama}</td>
-                                <td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td>
-                                <td class="border p-2 text-center">${bulan}</td>
-                               </tr>`;
-            document.getElementById('tabelProduksi').innerHTML += barisBaru;
+            // Masuk ke Tabel Produksi
+            const baris = `<tr><td class="border p-2">${nama}</td><td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td><td class="border p-2 text-center">${new Date().toLocaleString('id-ID', {month:'long'})}</td></tr>`;
+            document.getElementById('tabelProduksi').innerHTML += baris;
 
-            // 2. Hitung Ulang Angka Total
+            // Update Angka
             totalP += jumlah;
             document.getElementById('totalProduksi').innerText = totalP.toLocaleString('id-ID');
             hitungOtomatis();
 
-            // 3. Bersihkan kolom input
+            // Bersihkan
             document.getElementById('namaBibit').value = "";
             document.getElementById('jmlProduksi').value = "";
-            
-            alert("✅ Data Produksi BERHASIL disimpan & masuk ke tabel!");
+            alert("✅ Produksi disimpan!");
         }
 
 
-        // ✅ FUNGSI SIMPAN DISTRIBUSI (SUDAH BISA MASUK KE TABEL)
+        // SIMPAN DISTRIBUSI
         function simpanDistribusi() {
-            const nama = document.getElementById('namaBibit').value;
+            const nama = document.getElementById('namaBibit').value.trim();
             const jumlah = parseInt(document.getElementById('jmlDistribusi').value);
             const pengambil = (peranPengguna === "admin") ? "Admin" : "Masyarakat";
 
-            // Cek Validasi
-            if(!nama || !jumlah || jumlah <= 0) {
-                alert("⚠️ Mohon isi Nama Bibit dan Jumlah dengan benar!");
-                return;
-            }
-            if(jumlah > (totalP - totalD)) {
-                alert("❌ Stok tidak cukup! Sisa stok: " + (totalP - totalD));
-                return;
-            }
+            if(!nama || isNaN(jumlah) || jumlah <= 0) { alert("⚠️ Isi nama & jumlah!"); return; }
+            if(jumlah > (totalP - totalD)) { alert("❌ Stok kurang! Sisa: " + (totalP - totalD)); return; }
 
-            // 1. Masukkan data ke Tabel Distribusi
-            const barisBaru = `<tr>
-                                <td class="border p-2">${nama}</td>
-                                <td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td>
-                                <td class="border p-2 text-center">${pengambil}</td>
-                               </tr>`;
-            document.getElementById('tabelDistribusi').innerHTML += barisBaru;
+            // Masuk ke Tabel Distribusi
+            const baris = `<tr><td class="border p-2">${nama}</td><td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td><td class="border p-2 text-center">${pengambil}</td></tr>`;
+            document.getElementById('tabelDistribusi').innerHTML += baris;
 
-            // 2. Hitung Ulang Angka Total
+            // Update Angka
             totalD += jumlah;
             document.getElementById('totalDistribusi').innerText = totalD.toLocaleString('id-ID');
             hitungOtomatis();
 
-            // 3. Bersihkan kolom input
+            // Bersihkan
             document.getElementById('namaBibit').value = "";
             document.getElementById('jmlDistribusi').value = "";
-            
-            alert("✅ Data Distribusi BERHASIL disimpan & masuk ke tabel!");
+            alert("✅ Distribusi disimpan!");
         }
 
 
-        // ✅ FUNGSI HITUNG SISA STOK & CAPAIAN OTOMATIS
+        // HITUNG OTOMATIS
         function hitungOtomatis() {
             const sisa = totalP - totalD;
-            const capaian = (totalP > 0) ? Math.round((totalD / totalP) * 100) : 0;
+            const capaian = (totalP > 0) ? ((totalD / totalP)*100).toFixed(1) : "0.0";
             
             document.getElementById('sisaStok').innerText = sisa.toLocaleString('id-ID');
             document.getElementById('capaian').innerText = capaian + "%";
