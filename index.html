@@ -1,292 +1,485 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pencatatan Produksi & Distribusi Bibit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        hijau: {
-                            utama: '#249458',
-                            muda: '#86d086',
-                            terang: '#e6f9e6',
-                            gelap: '#1a6b40'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .bg-pola {
-                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23249458' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sistem Bibit BPDAS</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+body{
+    background: linear-gradient(to bottom,#86d086,#249458);
+    min-height:100vh;
+}
+</style>
+
 </head>
-<body class="bg-gradient-to-b from-hijau-muda to-hijau-utama min-h-screen font-sans">
+<body class="font-sans">
 
-    <!-- HALAMAN LOGIN -->
-    <div id="halamanLogin" class="flex items-center justify-center min-h-screen px-4">
-        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md">
-            <div class="text-center mb-6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png" alt="Logo Kehutanan" class="h-16 mx-auto mb-2">
-                <h2 class="text-hijau-gelap font-bold text-xl">BPDAS BONE LIMBOTO</h2>
-                <p class="text-gray-600 text-sm">Sistem Pencatatan Produksi & Distribusi Bibit</p>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-1">Username</label>
-                    <input type="text" id="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-utama focus:border-transparent" placeholder="Masukkan username">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-1">Password</label>
-                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-utama focus:border-transparent" placeholder="Masukkan password">
-                </div>
+<!-- LOGIN -->
+<div id="loginPage" class="flex items-center justify-center min-h-screen p-4">
 
-                <button onclick="login()" class="w-full bg-hijau-utama hover:bg-hijau-gelap text-white font-medium py-2.5 rounded-lg transition">
-                    Masuk ke Sistem
-                </button>
-            </div>
+<div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
 
-            <div class="mt-4 text-center text-xs text-gray-500">
-                <p><strong>Akun:</strong><br>
-                🔹 Admin: <b>admin</b> / <b>admin123</b><br>
-                🔹 Masyarakat: <b>warga</b> / <b>warga123</b></p>
-            </div>
-        </div>
-    </div>
+<div class="text-center mb-6">
 
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png"
+class="h-20 mx-auto mb-3">
 
-    <!-- HALAMAN DASHBOARD -->
-    <div id="halamanDashboard" class="hidden bg-pola min-h-screen">
-        <div class="container mx-auto px-4 py-6 max-w-5xl">
-            
-            <div class="text-center mb-8">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png" alt="Logo Kehutanan" class="h-16 mx-auto mb-2">
-                <h1 class="text-hijau-gelap font-bold text-2xl">BPDAS BONE LIMBOTO</h1>
-                <h2 class="text-hijau-gelap font-semibold text-lg">SISTEM PENCATATAN PRODUKSI & DISTRIBUSI BIBIT</h2>
-            </div>
+<h1 class="font-bold text-2xl text-green-800">
+BPDAS BONE LIMBOTO
+</h1>
 
-            <div class="bg-white rounded-lg shadow-md p-3 mb-4 flex justify-between items-center">
-                <span id="namaPengguna" class="font-medium text-hijau-gelap"></span>
-                <button onclick="logout()" class="text-red-600 hover:text-red-800 text-sm"><i class="fa fa-sign-out mr-1"></i> Keluar</button>
-            </div>
+<p class="text-gray-600">
+Sistem Produksi & Distribusi Bibit
+</p>
 
+</div>
 
-            <!-- INPUT DATA -->
-            <div class="bg-white rounded-lg shadow-lg p-5 mb-6" id="kotakInput">
-                <h3 class="font-semibold text-gray-700 mb-3">INPUT DATA</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
-                    
-                    <div>
-                        <label class="block text-xs text-gray-600 mb-1">Nama Bibit</label>
-                        <input type="text" id="namaBibit" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Contoh: Pala, Cengkeh, Durian">
-                    </div>
-                    
-                    <div id="kolomProduksi">
-                        <label class="block text-xs text-gray-600 mb-1">Jumlah Produksi</label>
-                        <input type="number" id="jmlProduksi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs text-gray-600 mb-1">Jumlah Distribusi</label>
-                        <input type="number" id="jmlDistribusi" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="0">
-                    </div>
-                    
-                    <div class="flex gap-2">
-                        <button onclick="simpanProduksi()" id="tombolProduksi" class="bg-hijau-utama text-white px-4 py-2 rounded hover:bg-hijau-gelap transition">Produksi</button>
-                        <button onclick="simpanDistribusi()" class="bg-amber-700 text-white px-4 py-2 rounded hover:bg-amber-800 transition">Distribusi</button>
-                    </div>
-                </div>
-            </div>
+<div class="space-y-4">
+
+<input
+type="text"
+id="username"
+placeholder="Username"
+class="w-full border p-3 rounded-lg">
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+class="w-full border p-3 rounded-lg">
+
+<button
+onclick="login()"
+class="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
+Masuk
+</button>
+
+</div>
+
+<div class="mt-4 text-sm text-gray-500 text-center">
+Admin : admin / admin123
+<br>
+Warga : warga / warga123
+</div>
+
+</div>
+
+</div>
 
 
-            <!-- RINGKASAN ANGKA -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <p class="text-gray-600 text-sm">Total Produksi</p>
-                    <p class="text-hijau-utama font-bold text-2xl" id="totalProduksi">0</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4">
-                    <p class="text-gray-600 text-sm">Total Distribusi</p>
-                    <p class="text-amber-700 font-bold text-2xl" id="totalDistribusi">0</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4">
-                    <p class="text-gray-600 text-sm">Sisa Stok</p>
-                    <p class="text-blue-700 font-bold text-2xl" id="sisaStok">0</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4">
-                    <p class="text-gray-600 text-sm">Capaian (%)</p>
-                    <p class="text-purple-700 font-bold text-2xl" id="capaian">0.0%</p>
-                </div>
-            </div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden p-4">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="bg-white rounded-xl p-5 shadow-lg mb-5">
+
+<div class="flex justify-between items-center">
+
+<div>
+
+<h1 class="text-2xl font-bold text-green-800">
+BPDAS BONE LIMBOTO
+</h1>
+
+<p class="text-gray-600">
+Sistem Produksi & Distribusi Bibit
+</p>
+
+</div>
+
+<button
+onclick="logout()"
+class="bg-red-600 text-white px-4 py-2 rounded-lg">
+Logout
+</button>
+
+</div>
+
+</div>
 
 
-            <!-- TABEL DATA -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <!-- TABEL PRODUKSI -->
-                <div class="bg-white rounded-lg shadow-lg p-4" id="bagianProduksi">
-                    <h3 class="font-semibold text-gray-700 mb-3">DATA PRODUKSI</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="border p-2 text-left">Nama Bibit</th>
-                                    <th class="border p-2 text-center">Jumlah</th>
-                                    <th class="border p-2 text-center">Bulan Ini</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabelProduksi"></tbody>
-                        </table>
-                    </div>
-                </div>
 
-                <!-- TABEL DISTRIBUSI -->
-                <div class="bg-white rounded-lg shadow-lg p-4">
-                    <h3 class="font-semibold text-gray-700 mb-3">DATA DISTRIBUSI</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead id="headerDistribusi">
-                                <tr class="bg-gray-100">
-                                    <th class="border p-2 text-left">Nama Bibit</th>
-                                    <th class="border p-2 text-center">Jumlah</th>
-                                    <th class="border p-2 text-center" id="kolomPengambil">Diambil Oleh</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabelDistribusi"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<!-- FORM -->
+<div class="bg-white rounded-xl shadow-lg p-5 mb-5">
 
-            <div class="text-center mb-10">
-                <button class="bg-hijau-gelap text-white px-6 py-2.5 rounded-lg hover:bg-hijau-utama transition shadow-md">
-                    <i class="fa fa-download mr-2"></i> DOWNLOAD EXCEL
-                </button>
-            </div>
+<div class="grid md:grid-cols-4 gap-3">
 
-        </div>
-    </div>
+<input
+type="text"
+id="namaBibit"
+placeholder="Nama Bibit"
+class="border p-3 rounded-lg">
+
+<input
+type="number"
+id="jumlah"
+placeholder="Jumlah"
+class="border p-3 rounded-lg">
+
+<select
+id="jenis"
+class="border p-3 rounded-lg">
+
+<option value="produksi">Produksi</option>
+<option value="distribusi">Distribusi</option>
+
+</select>
+
+<button
+onclick="simpanData()"
+class="bg-green-700 hover:bg-green-800 text-white rounded-lg">
+Simpan Data
+</button>
+
+</div>
+
+</div>
 
 
-    <!-- LOGIKA DIPERBAIKI SESUAI TAMPILAN KAMU -->
-    <script>
-        let peranPengguna = ""; 
-        let totalP = 0;
-        let totalD = 0;
-        const bulanSekarang = new Date().getMonth();
 
-        // Login
-        function login() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+<!-- CARD -->
+<div class="grid md:grid-cols-3 gap-4 mb-5">
 
-            if(user === "admin" && pass === "admin123") {
-                peranPengguna = "admin";
-                bukaDashboard("Admin BPDAS");
-                // Tampilkan semua untuk ADMIN
-                document.getElementById('kolomProduksi').style.display = "block";
-                document.getElementById('tombolProduksi').style.display = "block";
-                document.getElementById('bagianProduksi').style.display = "block";
-                document.getElementById('kolomPengambil').style.display = "table-cell";
-            } 
-            else if(user === "warga" && pass === "warga123") {
-                peranPengguna = "masyarakat";
-                bukaDashboard("Pengambil Bibit");
-                // SEMBUNYIKAN BAGIAN PRODUKSI TOTAL untuk MASYARAKAT
-                document.getElementById('kolomProduksi').style.display = "none";
-                document.getElementById('tombolProduksi').style.display = "none";
-                document.getElementById('bagianProduksi').style.display = "none";
-                document.getElementById('kolomPengambil').style.display = "none";
-            } 
-            else {
-                alert("❌ Username atau Password salah!");
-            }
-        }
+<div class="bg-white p-5 rounded-xl shadow-lg text-center">
+<p class="text-gray-500">Total Produksi</p>
+<h1 id="totalProduksi" class="text-3xl font-bold text-green-700">0</h1>
+</div>
 
-        function bukaDashboard(nama) {
-            document.getElementById('halamanLogin').classList.add('hidden');
-            document.getElementById('halamanDashboard').classList.remove('hidden');
-            document.getElementById('namaPengguna').innerText = `Halo, ${nama}`;
-        }
+<div class="bg-white p-5 rounded-xl shadow-lg text-center">
+<p class="text-gray-500">Total Distribusi</p>
+<h1 id="totalDistribusi" class="text-3xl font-bold text-yellow-700">0</h1>
+</div>
 
-        function logout() {
-            document.getElementById('halamanDashboard').classList.add('hidden');
-            document.getElementById('halamanLogin').classList.remove('hidden');
-            document.getElementById('username').value = "";
-            document.getElementById('password').value = "";
-        }
+<div class="bg-white p-5 rounded-xl shadow-lg text-center">
+<p class="text-gray-500">Sisa Stok</p>
+<h1 id="sisaStok" class="text-3xl font-bold text-blue-700">0</h1>
+</div>
+
+</div>
 
 
-        // SIMPAN PRODUKSI
-        function simpanProduksi() {
-            const nama = document.getElementById('namaBibit').value.trim();
-            const jumlah = parseInt(document.getElementById('jmlProduksi').value);
 
-            if(!nama || isNaN(jumlah) || jumlah <= 0) { alert("⚠️ Isi nama & jumlah!"); return; }
-            if(peranPengguna !== "admin") { alert("❌ Hanya Admin!"); return; }
+<!-- TABLE -->
+<div class="grid lg:grid-cols-2 gap-5">
 
-            // Masuk ke Tabel Produksi
-            const baris = `<tr><td class="border p-2">${nama}</td><td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td><td class="border p-2 text-center">${new Date().toLocaleString('id-ID', {month:'long'})}</td></tr>`;
-            document.getElementById('tabelProduksi').innerHTML += baris;
+<!-- PRODUKSI -->
+<div class="bg-white rounded-xl shadow-lg p-5">
 
-            // Update Angka
-            totalP += jumlah;
-            document.getElementById('totalProduksi').innerText = totalP.toLocaleString('id-ID');
-            hitungOtomatis();
+<h2 class="font-bold text-lg mb-4 text-green-700">
+Data Produksi
+</h2>
 
-            // Bersihkan
-            document.getElementById('namaBibit').value = "";
-            document.getElementById('jmlProduksi').value = "";
-            alert("✅ Produksi disimpan!");
-        }
+<div class="overflow-auto">
 
+<table class="w-full text-sm">
 
-        // SIMPAN DISTRIBUSI
-        function simpanDistribusi() {
-            const nama = document.getElementById('namaBibit').value.trim();
-            const jumlah = parseInt(document.getElementById('jmlDistribusi').value);
-            const pengambil = (peranPengguna === "admin") ? "Admin" : "Masyarakat";
+<thead>
 
-            if(!nama || isNaN(jumlah) || jumlah <= 0) { alert("⚠️ Isi nama & jumlah!"); return; }
-            if(jumlah > (totalP - totalD)) { alert("❌ Stok kurang! Sisa: " + (totalP - totalD)); return; }
+<tr class="bg-gray-100">
 
-            // Masuk ke Tabel Distribusi
-            const baris = `<tr><td class="border p-2">${nama}</td><td class="border p-2 text-center">${jumlah.toLocaleString('id-ID')}</td><td class="border p-2 text-center">${pengambil}</td></tr>`;
-            document.getElementById('tabelDistribusi').innerHTML += baris;
+<th class="border p-2">Tanggal</th>
+<th class="border p-2">Bibit</th>
+<th class="border p-2">Jumlah</th>
 
-            // Update Angka
-            totalD += jumlah;
-            document.getElementById('totalDistribusi').innerText = totalD.toLocaleString('id-ID');
-            hitungOtomatis();
+</tr>
 
-            // Bersihkan
-            document.getElementById('namaBibit').value = "";
-            document.getElementById('jmlDistribusi').value = "";
-            alert("✅ Distribusi disimpan!");
-        }
+</thead>
+
+<tbody id="produksiBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
 
 
-        // HITUNG OTOMATIS
-        function hitungOtomatis() {
-            const sisa = totalP - totalD;
-            const capaian = (totalP > 0) ? ((totalD / totalP)*100).toFixed(1) : "0.0";
-            
-            document.getElementById('sisaStok').innerText = sisa.toLocaleString('id-ID');
-            document.getElementById('capaian').innerText = capaian + "%";
-        }
-    </script>
+
+<!-- DISTRIBUSI -->
+<div class="bg-white rounded-xl shadow-lg p-5">
+
+<h2 class="font-bold text-lg mb-4 text-yellow-700">
+Data Distribusi
+</h2>
+
+<div class="overflow-auto">
+
+<table class="w-full text-sm">
+
+<thead>
+
+<tr class="bg-gray-100">
+
+<th class="border p-2">Tanggal</th>
+<th class="border p-2">Bibit</th>
+<th class="border p-2">Jumlah</th>
+
+</tr>
+
+</thead>
+
+<tbody id="distribusiBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyReLRvqeBF5saVOk0Wf4ztvwXz8lssR_UnTwo1RjPWidJaVJe6E7uO6d5sNLHiiPTJ/exec";
+
+
+let role = "";
+let totalProduksi = 0;
+let totalDistribusi = 0;
+
+
+
+function login(){
+
+const username = document.getElementById("username").value;
+const password = document.getElementById("password").value;
+
+if(username === "admin" && password === "admin123"){
+
+role = "admin";
+
+masukDashboard();
+
+}
+
+else if(username === "warga" && password === "warga123"){
+
+role = "warga";
+
+masukDashboard();
+
+}
+
+else{
+
+alert("Username / Password Salah");
+
+}
+
+}
+
+
+
+function masukDashboard(){
+
+document.getElementById("loginPage").classList.add("hidden");
+
+document.getElementById("dashboard").classList.remove("hidden");
+
+loadData();
+
+}
+
+
+
+function logout(){
+
+location.reload();
+
+}
+
+
+
+async function simpanData(){
+
+const namaBibit = document.getElementById("namaBibit").value;
+const jumlah = parseInt(document.getElementById("jumlah").value);
+const jenis = document.getElementById("jenis").value;
+
+if(!namaBibit || !jumlah){
+
+alert("Lengkapi Data");
+
+return;
+
+}
+
+const payload = {
+
+action: jenis,
+namaBibit: namaBibit,
+jumlah: jumlah,
+user: role,
+pengambil: role
+
+};
+
+try{
+
+await fetch(API_URL,{
+
+method:"POST",
+
+body: JSON.stringify(payload)
+
+});
+
+alert("Data berhasil disimpan");
+
+document.getElementById("namaBibit").value = "";
+document.getElementById("jumlah").value = "";
+
+loadData();
+
+}
+
+catch(error){
+
+alert("Gagal menyimpan");
+
+console.log(error);
+
+}
+
+}
+
+
+
+async function loadData(){
+
+const response = await fetch(API_URL);
+
+const data = await response.json();
+
+loadProduksi(data.produksi);
+
+loadDistribusi(data.distribusi);
+
+}
+
+
+
+function loadProduksi(data){
+
+let html = "";
+
+totalProduksi = 0;
+
+for(let i=1; i<data.length; i++){
+
+html += `
+
+<tr>
+
+<td class="border p-2">
+${formatTanggal(data[i][0])}
+</td>
+
+<td class="border p-2">
+${data[i][1]}
+</td>
+
+<td class="border p-2 text-center">
+${data[i][2]}
+</td>
+
+</tr>
+
+`;
+
+totalProduksi += Number(data[i][2]);
+
+}
+
+document.getElementById("produksiBody").innerHTML = html;
+
+document.getElementById("totalProduksi").innerText =
+totalProduksi.toLocaleString("id-ID");
+
+updateStok();
+
+}
+
+
+
+function loadDistribusi(data){
+
+let html = "";
+
+totalDistribusi = 0;
+
+for(let i=1; i<data.length; i++){
+
+html += `
+
+<tr>
+
+<td class="border p-2">
+${formatTanggal(data[i][0])}
+</td>
+
+<td class="border p-2">
+${data[i][1]}
+</td>
+
+<td class="border p-2 text-center">
+${data[i][2]}
+</td>
+
+</tr>
+
+`;
+
+totalDistribusi += Number(data[i][2]);
+
+}
+
+document.getElementById("distribusiBody").innerHTML = html;
+
+document.getElementById("totalDistribusi").innerText =
+totalDistribusi.toLocaleString("id-ID");
+
+updateStok();
+
+}
+
+
+
+function updateStok(){
+
+const sisa = totalProduksi - totalDistribusi;
+
+document.getElementById("sisaStok").innerText =
+sisa.toLocaleString("id-ID");
+
+}
+
+
+
+function formatTanggal(tanggal){
+
+const d = new Date(tanggal);
+
+return d.toLocaleDateString("id-ID");
+
+}
+
+</script>
 
 </body>
 </html>
