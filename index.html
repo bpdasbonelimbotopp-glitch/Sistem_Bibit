@@ -11,17 +11,23 @@
 <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <style>
+
 body{
     background: linear-gradient(to bottom,#86d086,#249458);
     min-height:100vh;
 }
+
 </style>
 
 </head>
+
 <body class="font-sans">
 
+<!-- ========================= -->
 <!-- LOGIN -->
-<div id="loginPage" class="flex items-center justify-center min-h-screen p-4">
+<!-- ========================= -->
+<div id="loginPage"
+class="flex items-center justify-center min-h-screen p-4">
 
 <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
 
@@ -58,28 +64,39 @@ class="w-full border p-3 rounded-lg">
 <button
 onclick="login()"
 class="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
+
 Masuk
+
 </button>
 
 </div>
 
 <div class="mt-4 text-sm text-gray-500 text-center">
-Admin : admin / admin123
-<br>
-Warga : warga / warga123
-</div>
+
+<b>ADMIN</b><br>
+admin / admin123
+
+<br><br>
+
+<b>WARGA</b><br>
+warga / warga123
 
 </div>
 
 </div>
 
+</div>
 
 
+
+<!-- ========================= -->
 <!-- DASHBOARD -->
+<!-- ========================= -->
 <div id="dashboard" class="hidden p-4">
 
 <div class="max-w-7xl mx-auto">
 
+<!-- HEADER -->
 <div class="bg-white rounded-xl p-5 shadow-lg mb-5">
 
 <div class="flex justify-between items-center">
@@ -98,8 +115,10 @@ Sistem Produksi & Distribusi Bibit
 
 <button
 onclick="logout()"
-class="bg-red-600 text-white px-4 py-2 rounded-lg">
+class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+
 Logout
+
 </button>
 
 </div>
@@ -108,7 +127,9 @@ Logout
 
 
 
-<!-- FORM -->
+<!-- ========================= -->
+<!-- FORM INPUT -->
+<!-- ========================= -->
 <div class="bg-white rounded-xl shadow-lg p-5 mb-5">
 
 <div class="grid md:grid-cols-4 gap-3">
@@ -129,15 +150,22 @@ class="border p-3 rounded-lg">
 id="jenis"
 class="border p-3 rounded-lg">
 
-<option value="produksi">Produksi</option>
-<option value="distribusi">Distribusi</option>
+<option id="opsiProduksi" value="produksi">
+Produksi
+</option>
+
+<option value="distribusi">
+Distribusi
+</option>
 
 </select>
 
 <button
 onclick="simpanData()"
 class="bg-green-700 hover:bg-green-800 text-white rounded-lg">
+
 Simpan Data
+
 </button>
 
 </div>
@@ -146,36 +174,81 @@ Simpan Data
 
 
 
+<!-- ========================= -->
 <!-- CARD -->
+<!-- ========================= -->
 <div class="grid md:grid-cols-3 gap-4 mb-5">
 
+<!-- PRODUKSI -->
 <div class="bg-white p-5 rounded-xl shadow-lg text-center">
-<p class="text-gray-500">Total Produksi</p>
-<h1 id="totalProduksi" class="text-3xl font-bold text-green-700">0</h1>
+
+<p class="text-gray-500">
+Total Produksi
+</p>
+
+<h1 id="totalProduksi"
+class="text-3xl font-bold text-green-700">
+
+0
+
+</h1>
+
 </div>
 
+
+
+<!-- DISTRIBUSI -->
 <div class="bg-white p-5 rounded-xl shadow-lg text-center">
-<p class="text-gray-500">Total Distribusi</p>
-<h1 id="totalDistribusi" class="text-3xl font-bold text-yellow-700">0</h1>
+
+<p class="text-gray-500">
+Total Distribusi
+</p>
+
+<h1 id="totalDistribusi"
+class="text-3xl font-bold text-yellow-700">
+
+0
+
+</h1>
+
 </div>
 
+
+
+<!-- STOK -->
 <div class="bg-white p-5 rounded-xl shadow-lg text-center">
-<p class="text-gray-500">Sisa Stok</p>
-<h1 id="sisaStok" class="text-3xl font-bold text-blue-700">0</h1>
-</div>
+
+<p class="text-gray-500">
+Sisa Stok
+</p>
+
+<h1 id="sisaStok"
+class="text-3xl font-bold text-blue-700">
+
+0
+
+</h1>
 
 </div>
 
+</div>
 
 
+
+<!-- ========================= -->
 <!-- TABLE -->
+<!-- ========================= -->
 <div class="grid lg:grid-cols-2 gap-5">
 
+<!-- ========================= -->
 <!-- PRODUKSI -->
+<!-- ========================= -->
 <div class="bg-white rounded-xl shadow-lg p-5">
 
 <h2 class="font-bold text-lg mb-4 text-green-700">
+
 Data Produksi
+
 </h2>
 
 <div class="overflow-auto">
@@ -186,9 +259,17 @@ Data Produksi
 
 <tr class="bg-gray-100">
 
-<th class="border p-2">Tanggal</th>
-<th class="border p-2">Bibit</th>
-<th class="border p-2">Jumlah</th>
+<th class="border p-2">
+Tanggal
+</th>
+
+<th class="border p-2">
+Bibit
+</th>
+
+<th class="border p-2">
+Jumlah
+</th>
 
 </tr>
 
@@ -204,11 +285,15 @@ Data Produksi
 
 
 
+<!-- ========================= -->
 <!-- DISTRIBUSI -->
+<!-- ========================= -->
 <div class="bg-white rounded-xl shadow-lg p-5">
 
 <h2 class="font-bold text-lg mb-4 text-yellow-700">
+
 Data Distribusi
+
 </h2>
 
 <div class="overflow-auto">
@@ -219,9 +304,17 @@ Data Distribusi
 
 <tr class="bg-gray-100">
 
-<th class="border p-2">Tanggal</th>
-<th class="border p-2">Bibit</th>
-<th class="border p-2">Jumlah</th>
+<th class="border p-2">
+Tanggal
+</th>
+
+<th class="border p-2">
+Bibit
+</th>
+
+<th class="border p-2">
+Jumlah
+</th>
 
 </tr>
 
@@ -243,41 +336,59 @@ Data Distribusi
 
 
 
+<!-- ========================= -->
+<!-- SCRIPT -->
+<!-- ========================= -->
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyReLRvqeBF5saVOk0Wf4ztvwXz8lssR_UnTwo1RjPWidJaVJe6E7uO6d5sNLHiiPTJ/exec";
-
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyReLRvqeBF5saVOk0Wf4ztvwXz8lssR_UnTwo1RjPWidJaVJe6E7uO6d5sNLHiiPTJ/exec";
 
 let role = "";
+
 let totalProduksi = 0;
 let totalDistribusi = 0;
 
 
 
+// =========================
+// LOGIN
+// =========================
 function login(){
 
-const username = document.getElementById("username").value;
-const password = document.getElementById("password").value;
+const username =
+document.getElementById("username").value;
 
-if(username === "admin" && password === "admin123"){
+const password =
+document.getElementById("password").value;
 
-role = "admin";
 
-masukDashboard();
+
+// ADMIN
+if(username === "admin" &&
+password === "admin123"){
+
+    role = "admin";
+
+    masukDashboard();
 
 }
 
-else if(username === "warga" && password === "warga123"){
 
-role = "warga";
 
-masukDashboard();
+// WARGA
+else if(username === "warga" &&
+password === "warga123"){
+
+    role = "warga";
+
+    masukDashboard();
 
 }
 
 else{
 
-alert("Username / Password Salah");
+    alert("Username / Password Salah");
 
 }
 
@@ -285,18 +396,66 @@ alert("Username / Password Salah");
 
 
 
+// =========================
+// MASUK DASHBOARD
+// =========================
 function masukDashboard(){
 
-document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("loginPage")
+.classList.add("hidden");
 
-document.getElementById("dashboard").classList.remove("hidden");
+document.getElementById("dashboard")
+.classList.remove("hidden");
+
+
+
+// =========================
+// MODE WARGA
+// =========================
+if(role === "warga"){
+
+    // sembunyikan pilihan produksi
+    document.getElementById("opsiProduksi")
+    .style.display = "none";
+
+    // otomatis pilih distribusi
+    document.getElementById("jenis").value =
+    "distribusi";
+
+}
+
+
+
+// =========================
+// MODE ADMIN
+// =========================
+if(role === "admin"){
+
+    document.getElementById("opsiProduksi")
+    .style.display = "block";
+
+}
+
+
 
 loadData();
 
+
+
+// realtime refresh
+setInterval(() => {
+
+    loadData();
+
+}, 5000);
+
 }
 
 
 
+// =========================
+// LOGOUT
+// =========================
 function logout(){
 
 location.reload();
@@ -305,111 +464,177 @@ location.reload();
 
 
 
+// =========================
+// SIMPAN DATA
+// =========================
 async function simpanData(){
 
-const namaBibit = document.getElementById("namaBibit").value;
-const jumlah = parseInt(document.getElementById("jumlah").value);
-const jenis = document.getElementById("jenis").value;
+const namaBibit =
+document.getElementById("namaBibit")
+.value.trim();
 
-if(!namaBibit || !jumlah){
+const jumlah =
+parseInt(document.getElementById("jumlah")
+.value);
 
-alert("Lengkapi Data");
+const jenis =
+document.getElementById("jenis")
+.value;
 
-return;
+
+
+// VALIDASI
+if(!namaBibit ||
+isNaN(jumlah) ||
+jumlah <= 0){
+
+    alert("Lengkapi data dengan benar");
+
+    return;
 
 }
 
+
+
+// WARGA TIDAK BOLEH PRODUKSI
+if(role === "warga" &&
+jenis === "produksi"){
+
+    alert("Warga tidak dapat input produksi");
+
+    return;
+
+}
+
+
+
 const payload = {
 
-action: jenis,
-namaBibit: namaBibit,
-jumlah: jumlah,
-user: role,
-pengambil: role
+    action: jenis,
+    namaBibit: namaBibit,
+    jumlah: jumlah,
+    user: role,
+    pengambil: role
 
 };
 
+
+
 try{
 
-await fetch(API_URL,{
+    await fetch(API_URL, {
 
-method:"POST",
+        method: "POST",
 
-body: JSON.stringify(payload)
+        body: JSON.stringify(payload)
 
-});
+    });
 
-alert("Data berhasil disimpan");
+    alert("Data berhasil disimpan");
 
-document.getElementById("namaBibit").value = "";
-document.getElementById("jumlah").value = "";
 
-loadData();
+
+    // RESET
+    document.getElementById("namaBibit")
+    .value = "";
+
+    document.getElementById("jumlah")
+    .value = "";
+
+
+
+    loadData();
 
 }
 
 catch(error){
 
-alert("Gagal menyimpan");
+    console.log(error);
 
-console.log(error);
-
-}
+    alert("Gagal menyimpan data");
 
 }
 
+}
 
 
+
+// =========================
+// LOAD DATA
+// =========================
 async function loadData(){
 
-const response = await fetch(API_URL);
+try{
 
-const data = await response.json();
+    const response =
+    await fetch(API_URL + "?t=" + new Date().getTime());
 
-loadProduksi(data.produksi);
+    const data =
+    await response.json();
 
-loadDistribusi(data.distribusi);
+    loadProduksi(data.produksi);
+
+    loadDistribusi(data.distribusi);
+
+}
+
+catch(error){
+
+    console.log(error);
+
+}
 
 }
 
 
 
+// =========================
+// LOAD PRODUKSI
+// =========================
 function loadProduksi(data){
 
 let html = "";
 
 totalProduksi = 0;
 
-for(let i=1; i<data.length; i++){
 
-html += `
 
-<tr>
+for(let i = 1; i < data.length; i++){
 
-<td class="border p-2">
-${formatTanggal(data[i][0])}
-</td>
+    html += `
 
-<td class="border p-2">
-${data[i][1]}
-</td>
+    <tr>
 
-<td class="border p-2 text-center">
-${data[i][2]}
-</td>
+    <td class="border p-2">
+    ${formatTanggal(data[i][0])}
+    </td>
 
-</tr>
+    <td class="border p-2">
+    ${data[i][1]}
+    </td>
 
-`;
+    <td class="border p-2 text-center">
+    ${Number(data[i][2]).toLocaleString("id-ID")}
+    </td>
 
-totalProduksi += Number(data[i][2]);
+    </tr>
+
+    `;
+
+    totalProduksi += Number(data[i][2]);
 
 }
 
-document.getElementById("produksiBody").innerHTML = html;
 
-document.getElementById("totalProduksi").innerText =
+
+document.getElementById("produksiBody")
+.innerHTML = html;
+
+document.getElementById("totalProduksi")
+.innerText =
 totalProduksi.toLocaleString("id-ID");
+
+
 
 updateStok();
 
@@ -417,42 +642,53 @@ updateStok();
 
 
 
+// =========================
+// LOAD DISTRIBUSI
+// =========================
 function loadDistribusi(data){
 
 let html = "";
 
 totalDistribusi = 0;
 
-for(let i=1; i<data.length; i++){
 
-html += `
 
-<tr>
+for(let i = 1; i < data.length; i++){
 
-<td class="border p-2">
-${formatTanggal(data[i][0])}
-</td>
+    html += `
 
-<td class="border p-2">
-${data[i][1]}
-</td>
+    <tr>
 
-<td class="border p-2 text-center">
-${data[i][2]}
-</td>
+    <td class="border p-2">
+    ${formatTanggal(data[i][0])}
+    </td>
 
-</tr>
+    <td class="border p-2">
+    ${data[i][1]}
+    </td>
 
-`;
+    <td class="border p-2 text-center">
+    ${Number(data[i][2]).toLocaleString("id-ID")}
+    </td>
 
-totalDistribusi += Number(data[i][2]);
+    </tr>
+
+    `;
+
+    totalDistribusi += Number(data[i][2]);
 
 }
 
-document.getElementById("distribusiBody").innerHTML = html;
 
-document.getElementById("totalDistribusi").innerText =
+
+document.getElementById("distribusiBody")
+.innerHTML = html;
+
+document.getElementById("totalDistribusi")
+.innerText =
 totalDistribusi.toLocaleString("id-ID");
+
+
 
 updateStok();
 
@@ -460,17 +696,25 @@ updateStok();
 
 
 
+// =========================
+// UPDATE STOK
+// =========================
 function updateStok(){
 
-const sisa = totalProduksi - totalDistribusi;
+const sisa =
+totalProduksi - totalDistribusi;
 
-document.getElementById("sisaStok").innerText =
+document.getElementById("sisaStok")
+.innerText =
 sisa.toLocaleString("id-ID");
 
 }
 
 
 
+// =========================
+// FORMAT TANGGAL
+// =========================
 function formatTanggal(tanggal){
 
 const d = new Date(tanggal);
