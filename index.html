@@ -3,560 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Sistem Bibit BPDAS</title>
+<title>Sistem Bibit</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<style>
-
-body{
-    background: linear-gradient(to bottom,#86d086,#249458);
-    min-height:100vh;
-}
-
-</style>
-
 </head>
 
-<body class="font-sans">
+<body class="bg-green-100 p-6">
 
-<!-- ========================= -->
-<!-- LOGIN -->
-<!-- ========================= -->
-<div id="loginPage"
-class="flex items-center justify-center min-h-screen p-4">
+<h1 class="text-2xl font-bold mb-4">Sistem Bibit</h1>
 
-<div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md">
+<div class="bg-white p-4 rounded shadow mb-4">
+<input id="namaBibit" placeholder="Nama Bibit" class="border p-2 mr-2">
+<input id="jumlah" type="number" placeholder="Jumlah" class="border p-2 mr-2">
 
-<div class="text-center mb-6">
-
-<img
-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_Kementerian_Kehutanan_Republik_Indonesia.svg/1200px-Logo_Kementerian_Kehutanan_Republik_Indonesia.svg.png"
-class="h-20 mx-auto mb-3">
-
-<h1 class="font-bold text-2xl text-green-800">
-BPDAS BONE LIMBOTO
-</h1>
-
-<p class="text-gray-600">
-Sistem Produksi & Distribusi Bibit
-</p>
-
-</div>
-
-<div class="space-y-4">
-
-<input
-type="text"
-id="username"
-placeholder="Username"
-class="w-full border p-3 rounded-lg">
-
-<input
-type="password"
-id="password"
-placeholder="Password"
-class="w-full border p-3 rounded-lg">
-
-<button
-onclick="login()"
-class="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg">
-
-Masuk
-
-</button>
-
-</div>
-
-<div class="mt-4 text-sm text-gray-500 text-center">
-
-<b>ADMIN</b><br>
-admin / admin123
-
-<br><br>
-
-<b>WARGA</b><br>
-warga / warga123
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- DASHBOARD -->
-<!-- ========================= -->
-<div id="dashboard" class="hidden p-4">
-
-<div class="max-w-7xl mx-auto">
-
-<!-- HEADER -->
-<div class="bg-white rounded-xl p-5 shadow-lg mb-5">
-
-<div class="flex justify-between items-center">
-
-<div>
-
-<h1 class="text-2xl font-bold text-green-800">
-BPDAS BONE LIMBOTO
-</h1>
-
-<p class="text-gray-600">
-Sistem Produksi & Distribusi Bibit
-</p>
-
-</div>
-
-<button
-onclick="logout()"
-class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
-
-Logout
-
-</button>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- FORM INPUT -->
-<!-- ========================= -->
-<div class="bg-white rounded-xl shadow-lg p-5 mb-5">
-
-<div class="grid md:grid-cols-4 gap-3">
-
-<input
-type="text"
-id="namaBibit"
-placeholder="Nama Bibit"
-class="border p-3 rounded-lg">
-
-<input
-type="number"
-id="jumlah"
-placeholder="Jumlah"
-class="border p-3 rounded-lg">
-
-<select
-id="jenis"
-class="border p-3 rounded-lg">
-
-<option id="opsiProduksi" value="produksi">
-Produksi
-</option>
-
-<option value="distribusi">
-Distribusi
-</option>
-
+<select id="jenis" class="border p-2 mr-2">
+<option value="produksi">Produksi</option>
+<option value="distribusi">Distribusi</option>
 </select>
 
-<button
-onclick="simpanData()"
-class="bg-green-700 hover:bg-green-800 text-white rounded-lg">
-
-Simpan Data
-
+<button onclick="simpanData()" class="bg-green-600 text-white px-4 py-2 rounded">
+Simpan
 </button>
-
 </div>
 
-</div>
+<h2 class="text-xl font-bold">Stok Per Bibit</h2>
+<div id="stokList" class="bg-white p-4 rounded shadow mt-2"></div>
 
-
-
-<!-- ========================= -->
-<!-- CARD -->
-<!-- ========================= -->
-<div class="grid md:grid-cols-3 gap-4 mb-5">
-
-<!-- PRODUKSI -->
-<div class="bg-white p-5 rounded-xl shadow-lg text-center">
-
-<p class="text-gray-500">
-Total Produksi
-</p>
-
-<h1 id="totalProduksi"
-class="text-3xl font-bold text-green-700">
-
-0
-
-</h1>
-
-</div>
-
-
-
-<!-- DISTRIBUSI -->
-<div class="bg-white p-5 rounded-xl shadow-lg text-center">
-
-<p class="text-gray-500">
-Total Distribusi
-</p>
-
-<h1 id="totalDistribusi"
-class="text-3xl font-bold text-yellow-700">
-
-0
-
-</h1>
-
-</div>
-
-
-
-<!-- STOK -->
-<div class="bg-white p-5 rounded-xl shadow-lg text-center">
-
-<p class="text-gray-500">
-Sisa Stok
-</p>
-
-<h1 id="sisaStok"
-class="text-3xl font-bold text-blue-700">
-
-0
-
-</h1>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- TABLE -->
-<!-- ========================= -->
-<div class="grid lg:grid-cols-2 gap-5">
-
-<!-- ========================= -->
-<!-- PRODUKSI -->
-<!-- ========================= -->
-<div class="bg-white rounded-xl shadow-lg p-5">
-
-<h2 class="font-bold text-lg mb-4 text-green-700">
-
-Data Produksi
-
-</h2>
-
-<div class="overflow-auto">
-
-<table class="w-full text-sm">
-
-<thead>
-
-<tr class="bg-gray-100">
-
-<th class="border p-2">
-Tanggal
-</th>
-
-<th class="border p-2">
-Bibit
-</th>
-
-<th class="border p-2">
-Jumlah
-</th>
-
-</tr>
-
-</thead>
-
-<tbody id="produksiBody"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- DISTRIBUSI -->
-<!-- ========================= -->
-<div class="bg-white rounded-xl shadow-lg p-5">
-
-<h2 class="font-bold text-lg mb-4 text-yellow-700">
-
-Data Distribusi
-
-</h2>
-
-<div class="overflow-auto">
-
-<table class="w-full text-sm">
-
-<thead>
-
-<tr class="bg-gray-100">
-
-<th class="border p-2">
-Tanggal
-</th>
-
-<th class="border p-2">
-Bibit
-</th>
-
-<th class="border p-2">
-Jumlah
-</th>
-
-</tr>
-
-</thead>
-
-<tbody id="distribusiBody"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- SCRIPT -->
-<!-- ========================= -->
 <script>
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyReLRvqeBF5saVOk0Wf4ztvwXz8lssR_UnTwo1RjPWidJaVJe6E7uO6d5sNLHiiPTJ/exec";
-
-let role = "";
-
-let totalProduksi = 0;
-let totalDistribusi = 0;
-
+const API_URL = "https://script.google.com/macros/s/AKfycbyReLRvqeBF5saVOk0Wf4ztvwXz8lssR_UnTwo1RjPWidJaVJe6E7uO6d5sNLHiiPTJ/exec";
 
 
 // =========================
-// LOGIN
+// HITUNG STOK PER BIBIT
 // =========================
-function login(){
+function hitungStok(produksi, distribusi){
 
-const username =
-document.getElementById("username").value;
+    let stok = {};
 
-const password =
-document.getElementById("password").value;
+    // PRODUKSI
+    for(let i = 1; i < produksi.length; i++){
+        let nama = produksi[i][1];
+        let jumlah = Number(produksi[i][2]);
 
+        if(!stok[nama]) stok[nama] = 0;
 
+        stok[nama] += jumlah;
+    }
 
-// ADMIN
-if(username === "admin" &&
-password === "admin123"){
+    // DISTRIBUSI
+    for(let i = 1; i < distribusi.length; i++){
+        let nama = distribusi[i][1];
+        let jumlah = Number(distribusi[i][2]);
 
-    role = "admin";
+        if(!stok[nama]) stok[nama] = 0;
 
-    masukDashboard();
+        stok[nama] -= jumlah;
+    }
 
+    return stok;
 }
-
-
-
-// WARGA
-else if(username === "warga" &&
-password === "warga123"){
-
-    role = "warga";
-
-    masukDashboard();
-
-}
-
-else{
-
-    alert("Username / Password Salah");
-
-}
-
-}
-
-
-
-// =========================
-// MASUK DASHBOARD
-// =========================
-function masukDashboard(){
-
-document.getElementById("loginPage")
-.classList.add("hidden");
-
-document.getElementById("dashboard")
-.classList.remove("hidden");
-
-
-
-// =========================
-// MODE WARGA
-// =========================
-if(role === "warga"){
-
-    // sembunyikan pilihan produksi
-    document.getElementById("opsiProduksi")
-    .style.display = "none";
-
-    // otomatis pilih distribusi
-    document.getElementById("jenis").value =
-    "distribusi";
-
-}
-
-
-
-// =========================
-// MODE ADMIN
-// =========================
-if(role === "admin"){
-
-    document.getElementById("opsiProduksi")
-    .style.display = "block";
-
-}
-
-
-
-loadData();
-
-
-
-// realtime refresh
-setInterval(() => {
-
-    loadData();
-
-}, 5000);
-
-}
-
-
-
-// =========================
-// LOGOUT
-// =========================
-function logout(){
-
-location.reload();
-
-}
-
-
-
-// =========================
-// SIMPAN DATA
-// =========================
-async function simpanData(){
-
-const namaBibit =
-document.getElementById("namaBibit")
-.value.trim();
-
-const jumlah =
-parseInt(document.getElementById("jumlah")
-.value);
-
-const jenis =
-document.getElementById("jenis")
-.value;
-
-
-
-// VALIDASI
-if(!namaBibit ||
-isNaN(jumlah) ||
-jumlah <= 0){
-
-    alert("Lengkapi data dengan benar");
-
-    return;
-
-}
-
-
-
-// WARGA TIDAK BOLEH PRODUKSI
-if(role === "warga" &&
-jenis === "produksi"){
-
-    alert("Warga tidak dapat input produksi");
-
-    return;
-
-}
-
-
-
-const payload = {
-
-    action: jenis,
-    namaBibit: namaBibit,
-    jumlah: jumlah,
-    user: role,
-    pengambil: role
-
-};
-
-
-
-try{
-
-    await fetch(API_URL, {
-
-        method: "POST",
-
-        body: JSON.stringify(payload)
-
-    });
-
-    alert("Data berhasil disimpan");
-
-
-
-    // RESET
-    document.getElementById("namaBibit")
-    .value = "";
-
-    document.getElementById("jumlah")
-    .value = "";
-
-
-
-    loadData();
-
-}
-
-catch(error){
-
-    console.log(error);
-
-    alert("Gagal menyimpan data");
-
-}
-
-}
-
 
 
 // =========================
@@ -564,164 +70,92 @@ catch(error){
 // =========================
 async function loadData(){
 
-try{
+    const res = await fetch(API_URL);
+    const data = await res.json();
 
-    const response =
-    await fetch(API_URL + "?t=" + new Date().getTime());
+    const stok = hitungStok(data.produksi, data.distribusi);
 
-    const data =
-    await response.json();
-
-    loadProduksi(data.produksi);
-
-    loadDistribusi(data.distribusi);
-
+    tampilkanStok(stok);
 }
-
-catch(error){
-
-    console.log(error);
-
-}
-
-}
-
 
 
 // =========================
-// LOAD PRODUKSI
+// TAMPILKAN STOK
 // =========================
-function loadProduksi(data){
+function tampilkanStok(stok){
 
-let html = "";
+    let html = "";
 
-totalProduksi = 0;
+    for(let nama in stok){
 
+        let warna = stok[nama] <= 0 ? "text-red-600" : "text-green-700";
 
+        html += `
+        <div class="flex justify-between border-b py-1">
+            <span>${nama}</span>
+            <span class="${warna}">
+                ${stok[nama].toLocaleString("id-ID")}
+            </span>
+        </div>
+        `;
+    }
 
-for(let i = 1; i < data.length; i++){
-
-    html += `
-
-    <tr>
-
-    <td class="border p-2">
-    ${formatTanggal(data[i][0])}
-    </td>
-
-    <td class="border p-2">
-    ${data[i][1]}
-    </td>
-
-    <td class="border p-2 text-center">
-    ${Number(data[i][2]).toLocaleString("id-ID")}
-    </td>
-
-    </tr>
-
-    `;
-
-    totalProduksi += Number(data[i][2]);
-
+    document.getElementById("stokList").innerHTML = html;
 }
 
 
+// =========================
+// SIMPAN DATA
+// =========================
+async function simpanData(){
 
-document.getElementById("produksiBody")
-.innerHTML = html;
+    const namaBibit = document.getElementById("namaBibit").value.trim();
+    const jumlah = parseInt(document.getElementById("jumlah").value);
+    const jenis = document.getElementById("jenis").value;
 
-document.getElementById("totalProduksi")
-.innerText =
-totalProduksi.toLocaleString("id-ID");
+    if(!namaBibit || isNaN(jumlah) || jumlah <= 0){
+        alert("Input tidak valid");
+        return;
+    }
 
+    // AMBIL DATA TERBARU
+    const res = await fetch(API_URL);
+    const data = await res.json();
 
+    const stok = hitungStok(data.produksi, data.distribusi);
 
-updateStok();
+    // VALIDASI DISTRIBUSI
+    if(jenis === "distribusi"){
 
+        let stokSaatIni = stok[namaBibit] || 0;
+
+        if(jumlah > stokSaatIni){
+            alert("Stok tidak cukup! Sisa: " + stokSaatIni);
+            return;
+        }
+    }
+
+    // KIRIM DATA
+    await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: jenis,
+            namaBibit: namaBibit,
+            jumlah: jumlah
+        })
+    });
+
+    alert("Berhasil");
+
+    document.getElementById("namaBibit").value = "";
+    document.getElementById("jumlah").value = "";
+
+    loadData();
 }
 
 
-
-// =========================
-// LOAD DISTRIBUSI
-// =========================
-function loadDistribusi(data){
-
-let html = "";
-
-totalDistribusi = 0;
-
-
-
-for(let i = 1; i < data.length; i++){
-
-    html += `
-
-    <tr>
-
-    <td class="border p-2">
-    ${formatTanggal(data[i][0])}
-    </td>
-
-    <td class="border p-2">
-    ${data[i][1]}
-    </td>
-
-    <td class="border p-2 text-center">
-    ${Number(data[i][2]).toLocaleString("id-ID")}
-    </td>
-
-    </tr>
-
-    `;
-
-    totalDistribusi += Number(data[i][2]);
-
-}
-
-
-
-document.getElementById("distribusiBody")
-.innerHTML = html;
-
-document.getElementById("totalDistribusi")
-.innerText =
-totalDistribusi.toLocaleString("id-ID");
-
-
-
-updateStok();
-
-}
-
-
-
-// =========================
-// UPDATE STOK
-// =========================
-function updateStok(){
-
-const sisa =
-totalProduksi - totalDistribusi;
-
-document.getElementById("sisaStok")
-.innerText =
-sisa.toLocaleString("id-ID");
-
-}
-
-
-
-// =========================
-// FORMAT TANGGAL
-// =========================
-function formatTanggal(tanggal){
-
-const d = new Date(tanggal);
-
-return d.toLocaleDateString("id-ID");
-
-}
+// AUTO LOAD
+loadData();
 
 </script>
 
